@@ -9,11 +9,8 @@ public abstract class Content {
     private String description ;
     private int releaseYears ;
     private boolean isAvailable ;
-
-    public class genre extends Content {
-        private List<Content> genreList ;
+    private List<String> genre ;
 
     }
-}
 
 
