@@ -9,6 +9,16 @@ public abstract class Content {
     private boolean isAvailable ;
     private List<String> genre ;
 
+    public Content(int contentID, String title, String director, String description, int releaseYears, boolean isAvailable, List<String> genre) {
+        this.contentID = contentID;
+        this.title = title;
+        this.director = director;
+        this.description = description;
+        this.releaseYears = releaseYears;
+        this.isAvailable = isAvailable;
+        this.genre = genre;
+    }
+
     public int getContentID() {
         return contentID;
     }

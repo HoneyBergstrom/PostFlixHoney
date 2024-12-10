@@ -1,9 +1,13 @@
+import java.util.List;
+
 public class Movie extends Content {
     private int runTime;
     private boolean hasCreditScenes;
 
     // Constructor
-    public Movie(int runTime, boolean hasCreditScenes) {
+    public Movie(int contentID, String title, String director, String description, int releaseYears,
+                 boolean isAvailable, List<String> genre, int runTime, boolean hasCreditScenes) {
+        super(contentID, title, director, description, releaseYears, isAvailable, genre);
         this.runTime = runTime;
         this.hasCreditScenes = hasCreditScenes;
     }
