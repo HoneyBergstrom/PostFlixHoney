@@ -13,6 +13,9 @@ public class ContentManager {
         this.users = new ArrayList<>();
     }
 
+    public List<Content> getInventory() {
+        return inventory;
+    }
 
     public void addContent(Content content) {
         inventory.add(content);
