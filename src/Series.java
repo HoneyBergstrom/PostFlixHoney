@@ -37,4 +37,10 @@ public class Series extends Content {
         episodesEachSeason.put(seasonNumber, episodeCount);
         this.totalEpisodes = calculateTotalEpisodes(); // Update totalEpisodes
     }
+
+    @Override
+    public String toString() {
+        String genreString = String.join(", ", genre);
+        return this.getClass().getName() + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString + "Episodes: " + totalEpisodes;
+    }
 }

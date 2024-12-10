@@ -1,13 +1,13 @@
 import java.util.List;
 
 public abstract class Content {
-    private int contentID ;
-    private String title ;
-    private String director ;
-    private String description ;
-    private int releaseYears ;
-    private boolean isAvailable ;
-    private List<String> genre ;
+    public int contentID ;
+    public String title ;
+    public String director ;
+    public String description ;
+    public int releaseYears ;
+    public boolean isAvailable ;
+    public List<String> genre ;
 
     public int getContentID() {
         return contentID;

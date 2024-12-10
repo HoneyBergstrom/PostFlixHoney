@@ -3,6 +3,8 @@ public class Movie extends Content {
     private boolean hasCreditScenes;
 
     // Constructor
+
+
     public Movie(int runTime, boolean hasCreditScenes) {
         this.runTime = runTime;
         this.hasCreditScenes = hasCreditScenes;
@@ -22,5 +24,11 @@ public class Movie extends Content {
 
     public void setHasCreditScenes(boolean hasCreditScenes) {
         this.hasCreditScenes = hasCreditScenes;
+    }
+
+    @Override
+    public String toString() {
+        String genreString = String.join(", ", genre);
+        return this.getClass().getName() + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString;
     }
 }
