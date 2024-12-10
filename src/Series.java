@@ -1,5 +1,3 @@
-package Content;
-
 import java.util.HashMap;
 
 public class Series extends Content {

@@ -1,4 +1,8 @@
-package user;
+
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Customer extends User {
     private List<Rental> activeRentals;
@@ -6,14 +10,14 @@ public class Customer extends User {
     private Address address;
     
     //Ändra namn och göra till singleton?
-    private Netflix netflix;
+    private ContentManager contentManager;
 
-    public Customer(String name, String password, Address address, Netflix netflix) {
+    public Customer(String name, String password, Address address, ContentManager contentManager) {
         super(name, password);
         this.activeRentals = new ArrayList<>();
-        this.history = new ArrayList<>();
+        this.rentHistory = new ArrayList<>();
         this.address = address;
-        this.netflix = netflix;
+        this.contentManager = contentManager;
     }
 
     public void rentContent(Content content) {
@@ -29,9 +33,8 @@ public class Customer extends User {
     }
     
     public void returnContent(Content content) {
-        Rental rentalToRemove = activeRentals.stream()
-                .filter(rental -> rental.getContent().equals(content))
-                .findFirst();
+        Rental rentalToRemove = activeRentals.stream().filter(rental -> rental.getContent().equals(content)).findFirst()
+                .orElseThrow();
 
         if (rentalToRemove != null) {
             activeRentals.remove(rentalToRemove);
@@ -43,7 +46,7 @@ public class Customer extends User {
     }
     
     public void leaveFeedback(Content content, int score) {
-        if (history.contains(content)) {
+        if (rentHistory.contains(content)) {
             content.addRating(score);
             System.out.println("Feedback recorded for: " + content.getTitle());
         } else {

@@ -1,21 +1,19 @@
-package user;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Admin extends User {
     private List<User> managedUsers;
     //Ändra namn och göra till singleton?
-    private Netflix netflix;
+    private ContentManager contentManager;
     
-    public Admin(String name, String password, Netflix netflix) {
+    public Admin(String name, String password, ContentManager contentManager) {
         super(name, password);
         managedUsers = new ArrayList<>();
-        this.netflix = netflix;
+        this.contentManager = contentManager;
     }
     
     public void updateContent(int contentId) {
-        Content content = netflix.getContentById(contentId);
+        Content content = contentManager.getContentById(contentId);
         if (content != null) {
             //Lägg till vad som ska uppdateras
             content.updateMetadata();

@@ -1,10 +1,8 @@
-package Content;
-
 import java.util.List;
 
 public abstract class Content {
     private int contentID ;
-    private String titel ;
+    private String title ;
     private String director ;
     private String description ;
     private int releaseYears ;
@@ -19,12 +17,12 @@ public abstract class Content {
         this.contentID = contentID;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDirector() {

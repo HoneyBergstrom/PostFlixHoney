@@ -1,12 +1,14 @@
+
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Netflix {
+public class ContentManager {
     private List<Content> inventory;
     private List<User> users;
 
 
-    public Netflix() {
+    public ContentManager() {
         this.inventory = new ArrayList<>();
         this.users = new ArrayList<>();
     }
