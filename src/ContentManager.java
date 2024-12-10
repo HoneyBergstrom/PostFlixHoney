@@ -4,13 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContentManager {
+    private static ContentManager instance;
     private List<Content> inventory;
     private List<User> users;
 
 
-    public ContentManager() {
+    private ContentManager() {
         this.inventory = new ArrayList<>();
         this.users = new ArrayList<>();
+    }
+
+    public static ContentManager getInstance() {
+        if (instance == null) {
+            instance = new ContentManager();
+        }
+        return instance;
     }
 
     public List<Content> getInventory() {
