@@ -19,17 +19,24 @@ public class Customer extends User {
         this.address = address;
         this.contentManager = contentManager;
     }
+    
+    //TODO test constructor
+
+
+    public Customer(String name, String password) {
+        super(name, password);
+    }
 
     public void rentContent(Content content) {
-        if (content.isAvailable()) {
-            Rental rental = new Rental(content, this);
-            activeRentals.add(rental);
-            content.setAvailable(false);
-            rentHistory.add(content);
-            System.out.println("Content rented successfully: " + content.getTitle());
-        } else {
-            System.out.println("Content is currently unavailable");
-        }
+//        if (content.isAvailable()) {
+//            Rental rental = new Rental(content, this);
+//            activeRentals.add(rental);
+//            content.setAvailable(false);
+//            rentHistory.add(content);
+//            System.out.println("Content rented successfully: " + content.getTitle());
+//        } else {
+//            System.out.println("Content is currently unavailable");
+//        }
     }
     
     public void returnContent(Content content) {
@@ -46,12 +53,12 @@ public class Customer extends User {
     }
     
     public void leaveFeedback(Content content, int score) {
-        if (rentHistory.contains(content)) {
-            content.addRating(score);
-            System.out.println("Feedback recorded for: " + content.getTitle());
-        } else {
-            System.out.println("You can only leave feedback for content you have rented");
-        }
+//        if (rentHistory.contains(content)) {
+//            content.addRating(score);
+//            System.out.println("Feedback recorded for: " + content.getTitle());
+//        } else {
+//            System.out.println("You can only leave feedback for content you have rented");
+//        }
     }
 
     public List<Rental> getActiveRentals() {

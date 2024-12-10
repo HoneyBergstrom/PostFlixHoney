@@ -13,14 +13,14 @@ public class Admin extends User {
     }
     
     public void updateContent(int contentId) {
-        Content content = contentManager.getContentById(contentId);
-        if (content != null) {
-            //Lägg till vad som ska uppdateras
-            content.updateMetadata();
-            contentManager.updateContent(contentId, content);
-            System.out.println("Content updated successfully: " + content.getTitle());
-        } else {
-            System.out.println("Content not found with ID: " + contentId);
-        }
+//        Content content = contentManager.getContentById(contentId);
+//        if (content != null) {
+//            //Lägg till vad som ska uppdateras
+//            content.updateMetadata();
+//            contentManager.updateContent(contentId, content);
+//            System.out.println("Content updated successfully: " + content.getTitle());
+//        } else {
+//            System.out.println("Content not found with ID: " + contentId);
+//        }
     }
 }
