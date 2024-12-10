@@ -9,8 +9,8 @@ public class PostFlix {
     }
 
     public PostFlix() {
-//        contentManager = ContentManager.getInstance();
-//        loginManager = LoginManager.getInstance();
+        contentManager = ContentManager.getInstance();
+        loginManager = LoginManager.getInstance();
         run();
     }
 
