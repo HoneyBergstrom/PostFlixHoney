@@ -1,8 +1,38 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoginManager {
     private static LoginManager instance;
+    private List<User> users;
 
     private LoginManager() {
+        users = new ArrayList<>();
+        readUsersFromFile();
     }
+
+    private void readUsersFromFile() {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/users"))) {
+            String line;
+            if ((line = bufferedReader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[0].equals("user")) {
+                    String[] addressParts = parts[3].split(";");
+                    Address address = new Address(addressParts[0],
+                            Integer.parseInt(addressParts[1]), addressParts[2],
+                            Integer.parseInt(addressParts[3]), addressParts[4]);
+                    this.users.add(new Customer(parts[1], parts[2], address));
+                }
+            }
+            
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    
 
     public static LoginManager getInstance() {
         if (instance == null) {
@@ -11,7 +41,33 @@ public class LoginManager {
         return instance;
     }
 
-    public boolean authenticated() {
-        return false;
+    public User authenticated(String username, String password) {
+        for (User user : users) {
+            if (user.getName().equals(username) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public boolean registerUser(String username, String password, Address address) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("src/users", true))) {
+            bufferedWriter.write("user," + username + "," + password + "," + address.getStreet()
+            + ";" + address.getPostalCode() + ";" + address.getCity() + ";" + address.getDoorCode() + ";" + address.getPhoneNumber());
+            
+            users.add(new Customer(username, password, address));
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkUsernameAvailability(String username) {
+        for (User user : users) {
+            if (user.getName().equals(username)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

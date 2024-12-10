@@ -23,18 +23,64 @@ public class PostFlix {
         System.out.println("   WELCOME TO POSTFLIX! ");
         System.out.println("========================================\n");
 
-        System.out.print("Please enter your username: ");
-        String username = scanner.nextLine();
+        System.out.print("Do you want to (1) Register or (2) Login? Enter 1 or 2: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
 
-        System.out.print("Please enter your password: ");
-        String password = scanner.nextLine();
+        String username = "";
+        String password = "";
 
-        System.out.println(username + " " + password);
-        //Test boolean - alltid true
-        boolean alwaysTrue = true;
+        if (choice == 1) {
+            boolean registrationSuccess = false;
+            while (!registrationSuccess) {
+                System.out.println("\n--- Registration ---");
+                System.out.print("Enter a username: ");
+                username = scanner.nextLine();
+                System.out.print("Enter a password: ");
+                password = scanner.nextLine();
+                if (loginManager.checkUsernameAvailability(username)) {
+                    String street, postalCode, city, doorCode, phoneNumber;
 
-        //TODO get user from file
-        if (alwaysTrue) {
+                    System.out.print("Enter your street address: ");
+                    street = scanner.nextLine();
+
+                    System.out.print("Enter your postal code: ");
+                    postalCode = scanner.nextLine();
+
+                    System.out.print("Enter your city: ");
+                    city = scanner.nextLine();
+
+                    System.out.print("Enter your door code: ");
+                    doorCode = scanner.nextLine();
+
+                    System.out.print("Enter your phone number: ");
+                    phoneNumber = scanner.nextLine();
+
+                    Address address = new Address(street, Integer.parseInt(postalCode), city, Integer.parseInt(doorCode), phoneNumber);
+
+                    if (loginManager.registerUser(username, password, address)) {
+                        System.out.println("Registration successful! Please login now.");
+                        registrationSuccess = true;
+                    }
+                } else {
+                    System.out.println("Registration failed! Username may already exist.");
+                }
+            }
+        }
+
+        if (choice == 2 || choice == 1) {
+            if (username.isEmpty()) {
+                System.out.print("Please enter your username: ");
+                username = scanner.nextLine();
+            }
+            System.out.print("Please enter your password: ");
+            password = scanner.nextLine();
+
+        }
+
+        User user = loginManager.authenticated(username, password);
+
+        if (user!= null) {
             System.out.println("\n========================================");
             System.out.println("  LOGIN SUCCESSFUL! WELCOME, " + username.toUpperCase() + "!");
             System.out.println("========================================\n");
@@ -43,68 +89,101 @@ public class PostFlix {
             System.out.println("      LOGIN FAILED! INVALID CREDENTIALS.");
             System.out.println("========================================\n");
         }
-
-        //TODO check if customer or admin
+        
 
         //Test user
-        User user = new Customer(username, password);
+
         displayCommands(user);
 
 
         String userCommand = scanner.nextLine();
 
 
-        switch (userCommand.toLowerCase()) {
+        switch (userCommand.
+
+                toLowerCase()) {
             case "borrow":
-                System.out.println("You chose to borrow content.");
-                // Add borrow logic here
+                System.out.
+
+                        println("You chose to borrow content. Input title to borrow if available:");
+
                 break;
 
             case "return":
-                System.out.println("You chose to return borrowed content.");
-                // Add return logic here
+                System.out.
+
+                        println("You chose to return borrowed content.");
+// Add return logic here
                 break;
 
             case "list":
-                System.out.println("Displaying all available content...");
-                for (Content content : contentManager.getInventory()) {
-                    System.out.println(content.toString());
+                System.out.
+
+                        println("Displaying all available content...");
+                for (
+                        Content content : contentManager.
+
+                        getInventory()) {
+                    System.out.
+
+                            println(content.toString());
                 }
                 break;
 
             case "searchbyfilm":
-                System.out.println("Enter the film title to search: ");
+                System.out.
+
+                        println("Enter the film title to search: ");
+
                 String filmTitle = scanner.nextLine();
-                System.out.println("Searching for film: " + filmTitle);
+                System.out.
+
+                        println("Searching for film: " + filmTitle);
+
                 searchByTitle(filmTitle);
                 break;
 
             case "searchbygenre":
-                System.out.println("Enter the genre to search: ");
+                System.out.
+
+                        println("Enter the genre to search: ");
+
                 String genre = scanner.nextLine();
-                System.out.println("Listing all content in the genre: " + genre);
+                System.out.
+
+                        println("Listing all content in the genre: " + genre);
+
                 searchByGenre(genre);
                 break;
 
             case "manageuser":
-                System.out.println("Managing users...");
-                // Add user management logic here
+                System.out.
+
+                        println("Managing users...");
+// Add user management logic here
                 break;
 
             case "trackorder":
-                System.out.println("Tracking orders...");
-                // Add order tracking logic here
+                System.out.
+
+                        println("Tracking orders...");
+// Add order tracking logic here
                 break;
 
             case "updatecontent":
-                System.out.println("Updating content...");
-                // Add content update logic here
+                System.out.
+
+                        println("Updating content...");
+// Add content update logic here
                 break;
             case "commands":
+
                 displayCommands(user);
 
             default:
-                System.out.println("Invalid command! Please try again.");
+                System.out.
+
+                        println("Invalid command! Please try again.");
                 break;
         }
     }
@@ -148,6 +227,7 @@ public class PostFlix {
         }
 
     }
+
     private void searchByTitle(String filmTitle) {
         for (Content content : contentManager.getInventory()) {
             if (content.getTitle().equalsIgnoreCase(filmTitle)) {
