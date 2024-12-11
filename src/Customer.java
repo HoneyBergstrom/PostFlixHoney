@@ -10,14 +10,13 @@ public class Customer extends User {
     private Address address;
     
     //Ändra namn och göra till singleton?
-    private ContentManager contentManager;
+    
 
-    public Customer(String name, String password, Address address, ContentManager contentManager) {
+    public Customer(String name, String password, Address address) {
         super(name, password);
         this.activeRentals = new ArrayList<>();
         this.rentHistory = new ArrayList<>();
         this.address = address;
-        this.contentManager = contentManager;
     }
     
     //TODO test constructor
@@ -27,7 +26,7 @@ public class Customer extends User {
         super(name, password);
     }
 
-    public void rentContent(Content content) {
+    public void rentContent(String title) {
 //        if (content.isAvailable()) {
 //            Rental rental = new Rental(content, this);
 //            activeRentals.add(rental);

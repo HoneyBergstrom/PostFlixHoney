@@ -11,5 +11,13 @@ public abstract class User {
 
     public Rental trackOrder(int rentalId) {
         return null;
-    } 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
