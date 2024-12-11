@@ -1,6 +1,8 @@
 
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
@@ -71,6 +73,29 @@ public class ContentManager {
             System.exit(0);
         }
         return contents;
+    }
+
+    public void writeToFile(String fileName, List<Content> contents) {
+        try(BufferedWriter wr = new BufferedWriter(new FileWriter(fileName, true))) {
+
+            for(Content c : contents) {
+                wr.write(c.getContentID() + ", " + c.getTitle() + ", " + c.isAvailable());
+                wr.newLine();
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File could not be found");
+            e.printStackTrace();
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println("Could not write to file");
+            e.printStackTrace();
+            System.exit(0);
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
 
 
