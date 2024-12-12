@@ -80,7 +80,7 @@ public class PostFlix {
 
         User user = loginManager.authenticated(username, password);
 
-        if (user!= null) {
+        if (user != null) {
             System.out.println("\n========================================");
             System.out.println("  LOGIN SUCCESSFUL! WELCOME, " + username.toUpperCase() + "!");
             System.out.println("========================================\n");
@@ -89,7 +89,7 @@ public class PostFlix {
             System.out.println("      LOGIN FAILED! INVALID CREDENTIALS.");
             System.out.println("========================================\n");
         }
-        
+
 
         //Test user
 
@@ -99,81 +99,53 @@ public class PostFlix {
         String userCommand = scanner.nextLine();
 
 
-        switch (userCommand.
-
-                toLowerCase()) {
+        switch (userCommand.toLowerCase()) {
             case "borrow":
-                System.out.
-
-                        println("You chose to borrow content. Input title to borrow if available:");
-
+                System.out.println("You chose to borrow content. Input title to borrow if available:");
                 break;
 
             case "return":
-                System.out.
-
-                        println("You chose to return borrowed content.");
+                System.out.println("You chose to return borrowed content.");
 // Add return logic here
                 break;
 
             case "list":
-                System.out.
-
-                        println("Displaying all available content...");
-                for (
-                        Content content : contentManager.
-
-                        getInventory()) {
-                    System.out.
-
-                            println(content.toString());
+                System.out.println("Displaying all available content...");
+                for (Content content : contentManager.getInventory()) {
+                    System.out.println(content.toString());
                 }
                 break;
 
             case "searchbyfilm":
-                System.out.
-
-                        println("Enter the film title to search: ");
+                System.out.println("Enter the film title to search: ");
 
                 String filmTitle = scanner.nextLine();
-                System.out.
-
-                        println("Searching for film: " + filmTitle);
+                System.out.println("Searching for film: " + filmTitle);
 
                 searchByTitle(filmTitle);
                 break;
 
             case "searchbygenre":
-                System.out.
-
-                        println("Enter the genre to search: ");
+                System.out.println("Enter the genre to search: ");
 
                 String genre = scanner.nextLine();
-                System.out.
-
-                        println("Listing all content in the genre: " + genre);
+                System.out.println("Listing all content in the genre: " + genre);
 
                 searchByGenre(genre);
                 break;
 
             case "manageuser":
-                System.out.
-
-                        println("Managing users...");
+                System.out.println("Managing users...");
 // Add user management logic here
                 break;
 
             case "trackorder":
-                System.out.
-
-                        println("Tracking orders...");
+                System.out.println("Tracking orders...");
 // Add order tracking logic here
                 break;
 
             case "updatecontent":
-                System.out.
-
-                        println("Updating content...");
+                System.out.println("Updating content...");
 // Add content update logic here
                 break;
             case "commands":
@@ -181,9 +153,7 @@ public class PostFlix {
                 displayCommands(user);
 
             default:
-                System.out.
-
-                        println("Invalid command! Please try again.");
+                System.out.println("Invalid command! Please try again.");
                 break;
         }
     }
