@@ -10,7 +10,12 @@ public abstract class User {
     }
 
     public Rental trackOrder(int rentalId) {
-        return null;
+        Customer customer = (Customer) this;
+        return customer.getActiveRentals()
+                .stream()
+                .filter(rental -> rental.getContent().getContentID() == rentalId)
+                .findFirst()
+                .orElse(null);
     }
 
     public String getName() {

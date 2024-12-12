@@ -1,6 +1,7 @@
 
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,9 @@ public class Customer extends User {
         if (rentalToRemove != null) {
             activeRentals.remove(rentalToRemove);
             content.setAvailable(true);
+            //TODO ska vi lägga till content i List<Content> rentHistory när den tas bort? Behöver vi lägga till ett dateReturned
+            //TODO när en rental tas bort från activeRentals?
+            rentalToRemove.setDateReturned(LocalDate.now());
             System.out.println("Content returned successfully: " + content.getTitle());
         } else {
             System.out.println("No active rental found for this content");

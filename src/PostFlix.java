@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class PostFlix {
@@ -151,6 +152,26 @@ public class PostFlix {
             case "trackorder":
                 System.out.println("Tracking orders...");
 // Add order tracking logic here
+                Customer loggedInUser = (Customer) user;
+                List<Rental> activeRentals = loggedInUser.getActiveRentals();
+                if(activeRentals.size() == 0) {
+                    System.out.println("No active rentals found.");
+                    break;
+                }
+                System.out.println("List of active rentals:");
+                for (int i = 0; i < activeRentals.size(); i++) {
+                    System.out.println((i + 1) + ". " + activeRentals.get(i).getContent().getTitle());
+                }
+                System.out.println("Enter the number of the movie to track your order:");
+                int userInput = scanner.nextInt();
+                int orderID = userInput - 1;
+                if (userInput > activeRentals.size()) {
+                    System.out.println("Wrong input");
+                }
+                Rental rental = user.trackOrder(orderID);
+                if (rental != null) {
+                    System.out.println("Your content " + rental.getContent().getTitle() + " was shipped " + rental.getDateShipped());
+                }
                 break;
 
             case "updatecontent":
@@ -159,7 +180,7 @@ public class PostFlix {
                 } else {
                     System.out.println("Not admin");
                 }
-                
+
                 break;
             case "commands":
 
