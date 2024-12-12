@@ -17,6 +17,10 @@ public class PostFlix {
 
     private void run() {
 
+        for (Content content : contentManager.getInventory()) {
+            System.out.println(content.getContentID());
+        }
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("========================================");
@@ -41,6 +45,7 @@ public class PostFlix {
                 if (loginManager.checkUsernameAvailability(username)) {
                     String street, postalCode, city, doorCode, phoneNumber;
 
+                    //TODO Validate inputs
                     System.out.print("Enter your street address: ");
                     street = scanner.nextLine();
 
@@ -155,8 +160,12 @@ public class PostFlix {
                 break;
 
             case "updatecontent":
-                System.out.println("Updating content...");
-// Add content update logic here
+                if (user instanceof Admin) {
+                    ((Admin) user).updateContent(scanner);
+                } else {
+                    System.out.println("Not admin");
+                }
+                
                 break;
             case "commands":
 
@@ -169,6 +178,10 @@ public class PostFlix {
     }
 
     private void displayCommands(User user) {
+        if (user == null) {
+            System.out.println("Error: No user logged in");
+            return;
+        }
         if (user instanceof Customer) {
             System.out.println("========================================");
             System.out.println("           COMMAND LISTING");

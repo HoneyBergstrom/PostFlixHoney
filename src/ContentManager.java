@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.*;
 
 
@@ -185,6 +184,17 @@ public class ContentManager {
         for (Content content : inventory) {
             System.out.println("- " + content.getTitle() + " (Tillgänglig: " + content.isAvailable() + ")");
         }
+    }
+
+    public Content getContent(int id) {
+        for (Content content : inventory) {
+            System.out.println(content.contentID);
+            if (content.getContentID() == id) {
+                return content;
+            }
+        }
+
+        return null;
     }
 }
 //test

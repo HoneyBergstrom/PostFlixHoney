@@ -22,9 +22,11 @@ public class LoginManager {
                             Integer.parseInt(addressParts[1]), addressParts[2],
                             Integer.parseInt(addressParts[3]), addressParts[4]);
                     this.users.add(new Customer(parts[1], parts[2], address));
+                } else if (parts[0].equals("admin")) {
+                    this.users.add(new Admin(parts[1], parts[2]));
                 }
             }
-            
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -32,7 +34,7 @@ public class LoginManager {
         }
 
     }
-    
+
 
     public static LoginManager getInstance() {
         if (instance == null) {
@@ -53,8 +55,9 @@ public class LoginManager {
     public boolean registerUser(String username, String password, Address address) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("src/users", true))) {
             bufferedWriter.write("user," + username + "," + password + "," + address.getStreet()
-            + ";" + address.getPostalCode() + ";" + address.getCity() + ";" + address.getDoorCode() + ";" + address.getPhoneNumber());
-            
+                    + ";" + address.getPostalCode() + ";" + address.getCity() + ";" + address.getDoorCode() + ";" + address.getPhoneNumber()
+                    + "\n");
+
             users.add(new Customer(username, password, address));
         } catch (IOException e) {
             return false;
