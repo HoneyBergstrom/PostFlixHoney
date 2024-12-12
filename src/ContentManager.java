@@ -37,7 +37,8 @@ public class ContentManager {
         try(Scanner scanner = new Scanner(readDataFromFile)) {
                 while(scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    String[] parts = line.split(",");
+                    System.out.println(line);
+                    String[] parts = line.trim().split("\\|");
                     int contentID = Integer.parseInt(parts[0]);
                     String contentType = parts[1];
                     String title = parts[2];
