@@ -216,7 +216,7 @@ public class PostFlix {
     private void searchByGenre(String genre) {
         boolean found = false;
         for (Content content : contentManager.getInventory()) {
-            if (content.getGenre().contains(genre)) {
+            if (content.getGenres().contains(genre)) {
                 System.out.println("- " + content.getTitle());
                 found = true;
             }

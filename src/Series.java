@@ -43,7 +43,7 @@ public class Series extends Content {
 
     @Override
     public String toString() {
-        String genreString = String.join(", ", genre);
+        String genreString = String.join(", ", genres);
         return this.getClass().getName() + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString + "Episodes: " + totalEpisodes;
     }
 }

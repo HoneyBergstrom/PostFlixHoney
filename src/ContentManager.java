@@ -1,7 +1,13 @@
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
 
 public class ContentManager {
     private static ContentManager instance;
@@ -12,6 +18,7 @@ public class ContentManager {
     private ContentManager() {
         this.inventory = new ArrayList<>();
         this.users = new ArrayList<>();
+        readFromFile(Paths.get("src/Content"));
     }
 
     public static ContentManager getInstance() {
@@ -51,20 +58,24 @@ public class ContentManager {
                     }
                     else if(contentType.equals("Series")){
                         int totalEpisodes = Integer.parseInt(parts[8]);
-                        String[] episodeEachSeason = parts[9].split(";");
+                        String[] episodeEachSeason = parts[9].split(",");
 
                         HashMap<Integer, Integer> episodeEachSeasonMap = new HashMap();
-                        for (String s : episodeEachSeason) {
-                            String[] episodeAndSeason = s.split("-");
-                            int episode = Integer.parseInt(episodeAndSeason[0]);
-                            int season = Integer.parseInt(episodeAndSeason[1]);
-                            episodeEachSeasonMap.put(episode, season);
+                        for (String pair : episodeEachSeason) {
+                            String[] keyValue = pair.split("=");
+                            int key = Integer.parseInt(keyValue[0]);
+                            int value = Integer.parseInt(keyValue[1]);
+                            episodeEachSeasonMap.put(key, value);
                         }
 
                         Series series = new Series(contentID, title, director, description, releaseYear, isAvailable, genre, totalEpisodes, episodeEachSeasonMap);
                         contents.add(series);
                     }
                 }
+
+            for (Content content : contents) {
+                System.out.println(content.getTitle());
+            }
         }
         catch (FileNotFoundException e) {
             System.out.println("File could not be found");

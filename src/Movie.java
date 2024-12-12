@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Movie extends Content {
     private int runTime;
     private boolean hasCreditScenes;
@@ -28,7 +30,7 @@ public class Movie extends Content {
 
     @Override
     public String toString() {
-        String genreString = String.join(", ", genre);
+        String genreString = String.join(", ", genres);
         return this.getClass().getName() + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString;
     }
 }

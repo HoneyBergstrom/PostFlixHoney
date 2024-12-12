@@ -7,16 +7,16 @@ public abstract class Content {
     public String description ;
     public int releaseYears ;
     public boolean isAvailable ;
-    public List<String> genre ;
+    public List<String> genres;
 
-    public Content(int contentID, String title, String director, String description, int releaseYears, boolean isAvailable, List<String> genre) {
+    public Content(int contentID, String title, String director, String description, int releaseYears, boolean isAvailable, List<String> genres) {
         this.contentID = contentID;
         this.title = title;
         this.director = director;
         this.description = description;
         this.releaseYears = releaseYears;
         this.isAvailable = isAvailable;
-        this.genre = genre;
+        this.genres = genres;
     }
 
     public int getContentID() {
@@ -67,12 +67,12 @@ public abstract class Content {
         isAvailable = available;
     }
 
-    public List<String> getGenre() {
-        return genre;
+    public List<String> getGenres() {
+        return genres;
     }
 
-    public void setGenre(List<String> genre) {
-        this.genre = genre;
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
     }
 }
 
