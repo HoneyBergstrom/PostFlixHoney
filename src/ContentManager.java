@@ -53,7 +53,7 @@ public class ContentManager {
     }
 
 
-    public List<Content> readFromFile(Path readDataFromFile) {
+    public void readFromFile(Path readDataFromFile) {
 
         try (Scanner scanner = new Scanner(readDataFromFile)) {
             while (scanner.hasNextLine()) {
@@ -110,7 +110,6 @@ public class ContentManager {
             e.printStackTrace();
             System.exit(0);
         }
-        return inventory;
     }
 
     public void writeToFile(String fileName, List<Content> contents) {
@@ -157,12 +156,19 @@ public class ContentManager {
     }
 
 
-    public void processReturn(Content content) {
-        if (inventory.contains(content) && !content.isAvailable()) {
-            content.setAvailable(true);
-            System.out.println("Returen har behandlats: " + content.getTitle());
+    public void processReturn(int contentId, Customer customer) {
+        Content contentToReturn = this.getContent(contentId);
+
+        if (!contentToReturn.isAvailable()) {
+            contentToReturn.setAvailable(true);
+            
+            customer.getActiveRentals().remove(contentToReturn);
+            customer.addToHistory(contentToReturn);
+
+            System.out.println(customer.getName() + " has successfully return: " + contentToReturn.getTitle()
+            +"\nOn " + LocalDate.now());
         } else {
-            System.out.println("Returen kunde inte behandlas.");
+            System.out.println("Returning content failed");
         }
     }
 
@@ -185,4 +191,3 @@ public class ContentManager {
         return null;
     }
 }
-//test

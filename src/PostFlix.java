@@ -97,77 +97,83 @@ public class PostFlix {
 
 
         //Test user
+        
 
-        displayCommands(user);
-
-
-        String userCommand = scanner.nextLine();
-
-
-        switch (userCommand.toLowerCase()) {
-            case "borrow":
-                System.out.println("You chose to borrow content. Input Content ID  to borrow");
-                int contentIDToBorrow = scanner.nextInt();
-                System.out.println(contentIDToBorrow);
-                scanner.nextLine();
-
-                if (user != null) {
+        String userCommand = "";
+        System.out.println(userCommand);
+        while (true) {
+            displayCommands(user);
+            userCommand = scanner.nextLine();
+            System.out.println(userCommand);
+            switch (userCommand.toLowerCase()) {
+                case "borrow":
+                    System.out.println("You chose to borrow content. Input Content ID  to borrow");
+                    int contentIDToBorrow = scanner.nextInt();
+                    scanner.nextLine();
                     contentManager.borrowContent(contentIDToBorrow, (Customer) user);
-                } else {
-                    System.out.println("You must be logged in to borrow content.");
-                }
-                break;
 
-            case "list":
-                System.out.println("Displaying all available content...");
-                for (Content content : contentManager.getInventory()) {
-                    System.out.println(content.toString());
-                }
-                break;
+                    System.out.println("Borrwing book");
 
-            case "searchbyfilm":
-                System.out.println("Enter the film title to search: ");
+                    break;
+                case "return":
+                    System.out.println("You chose to return content. Input Content ID  to return");
+                    int contentIDToReturn = scanner.nextInt();
+                    scanner.nextLine();
+                    
+                    contentManager.processReturn(contentIDToReturn, (Customer) user);
+    
+                    break;
+                case "list":
+                    System.out.println("Displaying all available content...");
+                    for (Content content : contentManager.getInventory()) {
+                        System.out.println(content.toString());
+                    }
+                    break;
 
-                String filmTitle = scanner.nextLine();
-                System.out.println("Searching for film: " + filmTitle);
+                case "searchbyfilm":
+                    System.out.println("Enter the film title to search: ");
 
-                searchByTitle(filmTitle);
-                break;
+                    String filmTitle = scanner.nextLine();
+                    System.out.println("Searching for film: " + filmTitle);
 
-            case "searchbygenre":
-                System.out.println("Enter the genre to search: ");
+                    searchByTitle(filmTitle);
+                    break;
 
-                String genre = scanner.nextLine();
-                System.out.println("Listing all content in the genre: " + genre);
+                case "searchbygenre":
+                    System.out.println("Enter the genre to search: ");
 
-                searchByGenre(genre);
-                break;
+                    String genre = scanner.nextLine();
+                    System.out.println("Listing all content in the genre: " + genre);
 
-            case "manageuser":
-                System.out.println("Managing users...");
+                    searchByGenre(genre);
+                    break;
+
+                case "manageuser":
+                    System.out.println("Managing users...");
 // Add user management logic here
-                break;
+                    break;
 
-            case "trackorder":
-                System.out.println("Tracking orders...");
+                case "trackorder":
+                    System.out.println("Tracking orders...");
 // Add order tracking logic here
-                break;
+                    break;
 
-            case "updatecontent":
-                if (user instanceof Admin) {
-                    ((Admin) user).updateContent(scanner);
-                } else {
-                    System.out.println("Not admin");
-                }
-                
-                break;
-            case "commands":
+                case "updatecontent":
+                    if (user instanceof Admin) {
+                        ((Admin) user).updateContent(scanner);
+                    } else {
+                        System.out.println("Not admin");
+                    }
 
-                displayCommands(user);
+                    break;
+                case "commands":
 
-            default:
-                System.out.println("Invalid command! Please try again.");
-                break;
+                    displayCommands(user);
+
+                default:
+                    System.out.println("Invalid command! Please try again.");
+                    break;
+            }
         }
     }
 

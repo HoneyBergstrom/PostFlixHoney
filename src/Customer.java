@@ -87,4 +87,8 @@ public class Customer extends User {
     public void addRental(Rental rental) {
         this.activeRentals.add(rental);
     }
+
+    public void addToHistory(Content contentToReturn) {
+        rentHistory.add(contentToReturn);
+    }
 }
