@@ -1,11 +1,14 @@
 import java.util.HashMap;
+import java.util.List;
 
 public class Series extends Content {
     private int totalEpisodes;
     private HashMap<Integer, Integer> episodesEachSeason;
 
     // Constructor
-    public Series() {
+    public Series(int contentID, String title, String director, String description, int releaseYears, boolean isAvailable,
+                  List<String> genre, int totalEpisodes, HashMap<Integer, Integer> episodesEachSeason  ) {
+        super(contentID, title, director, description, releaseYears, isAvailable, genre);
         this.episodesEachSeason = new HashMap<>();
         this.totalEpisodes = 0;
     }
