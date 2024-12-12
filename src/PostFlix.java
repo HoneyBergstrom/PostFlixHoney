@@ -106,7 +106,7 @@ public class PostFlix {
 
         switch (userCommand.toLowerCase()) {
             case "borrow":
-                System.out.println("You chose to borrow content. Input title to borrow if available:");
+                System.out.println("You chose to borrow content. Input Content ID  to borrow");
                 int contentIDToBorrow = scanner.nextInt();
                 scanner.nextLine();
 
@@ -114,14 +114,7 @@ public class PostFlix {
                     contentManager.borrowContent(contentIDToBorrow, user.getUsername());
                 } else {
                     System.out.println("You must be logged in to borrow content.");
-
-
-                    break;
                 }
-
-            case "return":
-                System.out.println("You chose to return borrowed content.");
-// Add return logic here
                 break;
 
             case "list":

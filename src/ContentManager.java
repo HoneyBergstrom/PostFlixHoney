@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -34,82 +35,81 @@ public class ContentManager {
 
     public void borrowContent(int contentID, String username) {
 
-        Optional<Content> contentOptional = inventory.stream()
-                .filter(c -> c.getContentID() == contentID)
-                .findFirst();
+        Content contentToBorrow = this.getContent(contentID);
 
-        if (contentOptional.isPresent()) {
-            Content content = contentOptional.get();
-
-            if (content.isAvailable()) {
-                content.setAvailable(false);
-
-                System.out.println(username + " has successfully borrowed: " + content.getTitle());
-            } else {
-                System.out.println("The content is not available for borrowing.");
+        Customer customer = null;
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                customer = (Customer) user;
             }
-        } else {
-            System.out.println("Content with ID " + contentID + " not found.");
+        }
+        if (customer == null) {
+            System.out.println("Customer not found");
+            return;
         }
 
-        Rental rental = new Rental(contentOptional.get(), );
+        if (contentToBorrow.isAvailable()) {
+            contentToBorrow.setAvailable(false);
+
+            System.out.println(username + " has successfully borrowed: " + contentToBorrow.getTitle());
+        } else {
+            System.out.println("The content is not available for borrowing.");
+        }
 
 
+        Rental rental = new Rental(contentToBorrow, customer, LocalDate.now(), null, false);
 
-
+        customer.addRental(rental);
 
     }
-
 
 
     public List<Content> readFromFile(Path readDataFromFile) {
         List<Content> contents = new ArrayList<>();
 
-        try(Scanner scanner = new Scanner(readDataFromFile)) {
-                while(scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    System.out.println(line);
-                    String[] parts = line.trim().split("\\|");
-                    int contentID = Integer.parseInt(parts[0]);
-                    String contentType = parts[1];
-                    String title = parts[2];
-                    String director = parts[3];
-                    String description = parts[4];
-                    List<String> genre = Arrays.asList(parts[5].split(";"));
-                    int releaseYear = Integer.parseInt(parts[6]);
-                    boolean isAvailable = Boolean.parseBoolean(parts[7]);
+        try (Scanner scanner = new Scanner(readDataFromFile)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                System.out.println(line);
+                String[] parts = line.trim().split("\\|");
+                int contentID = Integer.parseInt(parts[0]);
+                String contentType = parts[1];
+                String title = parts[2];
+                String director = parts[3];
+                String description = parts[4];
+                List<String> genre = Arrays.asList(parts[5].split(";"));
+                int releaseYear = Integer.parseInt(parts[6]);
+                boolean isAvailable = Boolean.parseBoolean(parts[7]);
 
-                    if(contentType.equals("Movie")){
-                        int runtTime = Integer.parseInt(parts[8]);
-                        boolean hasCreditScenes = Boolean.parseBoolean(parts[9]);
-                        Movie movie = new Movie(contentID, title, director, description, releaseYear, isAvailable, genre, runtTime, hasCreditScenes);
-                        contents.add(movie);
-                        //Content content = contents.get(0);
-                        //Movie temp = (Movie)content;
-                        //temp.getRunTime();
+                if (contentType.equals("Movie")) {
+                    int runtTime = Integer.parseInt(parts[8]);
+                    boolean hasCreditScenes = Boolean.parseBoolean(parts[9]);
+                    Movie movie = new Movie(contentID, title, director, description, releaseYear, isAvailable, genre, runtTime, hasCreditScenes);
+                    contents.add(movie);
+                    //Content content = contents.get(0);
+                    //Movie temp = (Movie)content;
+                    //temp.getRunTime();
+                } else if (contentType.equals("Series")) {
+                    int totalEpisodes = Integer.parseInt(parts[8]);
+                    String[] episodeEachSeason = parts[9].split(",");
+
+                    HashMap<Integer, Integer> episodeEachSeasonMap = new HashMap();
+                    for (String pair : episodeEachSeason) {
+                        String[] keyValue = pair.split("=");
+                        int key = Integer.parseInt(keyValue[0]);
+                        int value = Integer.parseInt(keyValue[1]);
+                        episodeEachSeasonMap.put(key, value);
                     }
-                    else if(contentType.equals("Series")){
-                        int totalEpisodes = Integer.parseInt(parts[8]);
-                        String[] episodeEachSeason = parts[9].split(",");
 
-                        HashMap<Integer, Integer> episodeEachSeasonMap = new HashMap();
-                        for (String pair : episodeEachSeason) {
-                            String[] keyValue = pair.split("=");
-                            int key = Integer.parseInt(keyValue[0]);
-                            int value = Integer.parseInt(keyValue[1]);
-                            episodeEachSeasonMap.put(key, value);
-                        }
-
-                        Series series = new Series(contentID, title, director, description, releaseYear, isAvailable, genre, totalEpisodes, episodeEachSeasonMap);
-                        contents.add(series);
-                    }
+                    Series series = new Series(contentID, title, director, description, releaseYear, isAvailable, genre, totalEpisodes, episodeEachSeasonMap);
+                    contents.add(series);
                 }
+            }
 
             for (Content content : contents) {
                 System.out.println(content.getTitle());
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("File could not be found");
             e.printStackTrace();
             System.exit(0);
@@ -126,9 +126,9 @@ public class ContentManager {
     }
 
     public void writeToFile(String fileName, List<Content> contents) {
-        try(BufferedWriter wr = new BufferedWriter(new FileWriter(fileName, true))) {
+        try (BufferedWriter wr = new BufferedWriter(new FileWriter(fileName, true))) {
 
-            for(Content c : contents) {
+            for (Content c : contents) {
                 wr.write(c.getContentID() + ", " + c.getTitle() + ", " + c.isAvailable());
                 wr.newLine();
             }

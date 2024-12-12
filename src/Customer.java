@@ -83,4 +83,8 @@ public class Customer extends User {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public void addRental(Rental rental) {
+        this.activeRentals.add(rental);
+    }
 }
