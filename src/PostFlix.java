@@ -108,10 +108,11 @@ public class PostFlix {
             case "borrow":
                 System.out.println("You chose to borrow content. Input Content ID  to borrow");
                 int contentIDToBorrow = scanner.nextInt();
+                System.out.println(contentIDToBorrow);
                 scanner.nextLine();
 
                 if (user != null) {
-                    contentManager.borrowContent(contentIDToBorrow, user.getUsername());
+                    contentManager.borrowContent(contentIDToBorrow, (Customer) user);
                 } else {
                     System.out.println("You must be logged in to borrow content.");
                 }

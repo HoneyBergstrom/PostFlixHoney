@@ -14,13 +14,16 @@ public class LoginManager {
     private void readUsersFromFile() {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/users"))) {
             String line;
-            if ((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(",");
+                System.out.println(parts[0]);
                 if (parts[0].equals("user")) {
+                    
                     String[] addressParts = parts[3].split(";");
                     Address address = new Address(addressParts[0],
                             Integer.parseInt(addressParts[1]), addressParts[2],
                             Integer.parseInt(addressParts[3]), addressParts[4]);
+                    
                     this.users.add(new Customer(parts[1], parts[2], address));
                 } else if (parts[0].equals("admin")) {
                     this.users.add(new Admin(parts[1], parts[2]));
@@ -44,11 +47,18 @@ public class LoginManager {
     }
 
     public User authenticated(String username, String password) {
+        System.out.println(users.size());
+        for (User user : users) {
+            System.out.println("Username: " + user.getName());
+            System.out.println("Password: " + user.getPassword());
+        }
         for (User user : users) {
             if (user.getName().equals(username) && user.getPassword().equals(password)) {
+                System.out.println("Returning user");
                 return user;
             }
         }
+        System.out.println("Returning null");
         return null;
     }
 

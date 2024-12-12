@@ -33,25 +33,14 @@ public class ContentManager {
         return inventory;
     }
 
-    public void borrowContent(int contentID, String username) {
+    public void borrowContent(int contentID, Customer customer) {
 
         Content contentToBorrow = this.getContent(contentID);
-
-        Customer customer = null;
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                customer = (Customer) user;
-            }
-        }
-        if (customer == null) {
-            System.out.println("Customer not found");
-            return;
-        }
 
         if (contentToBorrow.isAvailable()) {
             contentToBorrow.setAvailable(false);
 
-            System.out.println(username + " has successfully borrowed: " + contentToBorrow.getTitle());
+            System.out.println(customer.getName() + " has successfully borrowed: " + contentToBorrow.getTitle());
         } else {
             System.out.println("The content is not available for borrowing.");
         }
