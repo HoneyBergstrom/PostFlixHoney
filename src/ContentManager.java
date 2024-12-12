@@ -19,6 +19,7 @@ public class ContentManager {
         this.inventory = new ArrayList<>();
         this.users = new ArrayList<>();
         readFromFile(Paths.get("src/Content"));
+        
     }
 
     public static ContentManager getInstance() {
@@ -31,13 +32,11 @@ public class ContentManager {
     public List<Content> getInventory() {
         return inventory;
     }
-    public List<Content> readFromFile(Path readDataFromFile) {
-        List<Content> contents = new ArrayList<>();
+    public void readFromFile(Path readDataFromFile) {
 
         try(Scanner scanner = new Scanner(readDataFromFile)) {
                 while(scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    System.out.println(line);
                     String[] parts = line.trim().split("\\|");
                     int contentID = Integer.parseInt(parts[0]);
                     String contentType = parts[1];
@@ -52,7 +51,7 @@ public class ContentManager {
                         int runtTime = Integer.parseInt(parts[8]);
                         boolean hasCreditScenes = Boolean.parseBoolean(parts[9]);
                         Movie movie = new Movie(contentID, title, director, description, releaseYear, isAvailable, genre, runtTime, hasCreditScenes);
-                        contents.add(movie);
+                        inventory.add(movie);
                         //Content content = contents.get(0);
                         //Movie temp = (Movie)content;
                         //temp.getRunTime();
@@ -70,13 +69,10 @@ public class ContentManager {
                         }
 
                         Series series = new Series(contentID, title, director, description, releaseYear, isAvailable, genre, totalEpisodes, episodeEachSeasonMap);
-                        contents.add(series);
+                        inventory.add(series);
                     }
                 }
-
-            for (Content content : contents) {
-                System.out.println(content.getTitle());
-            }
+                
         }
         catch (FileNotFoundException e) {
             System.out.println("File could not be found");
@@ -91,7 +87,6 @@ public class ContentManager {
             e.printStackTrace();
             System.exit(0);
         }
-        return contents;
     }
 
     public void writeToFile(String fileName, List<Content> contents) {
@@ -153,6 +148,17 @@ public class ContentManager {
         for (Content content : inventory) {
             System.out.println("- " + content.getTitle() + " (Tillgänglig: " + content.isAvailable() + ")");
         }
+    }
+
+    public Content getContent(int id) {
+        for (Content content : inventory) {
+            System.out.println(content.contentID);
+            if (content.getContentID() == id) {
+                return content;
+            }
+        }
+        
+        return null;
     }
 }
 //test

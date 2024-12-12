@@ -46,4 +46,19 @@ public class Series extends Content {
         String genreString = String.join(", ", genres);
         return this.getClass().getName() + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString + "Episodes: " + totalEpisodes;
     }
+
+    @Override
+    public void printFullDetails() {
+        System.out.println("\n--- Series Details ---");
+        printBasicDetails();
+        System.out.println("Total Episodes: " + totalEpisodes);
+        System.out.println("Episodes Each Season: ");
+        if (episodesEachSeason.isEmpty()) {
+            System.out.println("  No data available.");
+        } else {
+            for (int season : episodesEachSeason.keySet()) {
+                System.out.println("  Season " + season + ": " + episodesEachSeason.get(season) + " episodes");
+            }
+        }
+    }
 }

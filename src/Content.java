@@ -19,6 +19,18 @@ public abstract class Content {
         this.genres = genres;
     }
 
+    public abstract void printFullDetails();
+
+    protected void printBasicDetails() {
+        System.out.println("Content ID: " + contentID);
+        System.out.println("Title: " + title);
+        System.out.println("Director: " + director);
+        System.out.println("Description: " + description);
+        System.out.println("Release Year: " + releaseYears);
+        System.out.println("Available: " + (isAvailable ? "Yes" : "No"));
+        System.out.println("Genres: " + (genres.isEmpty() ? "None" : String.join(", ", genres)));
+    }
+
     public int getContentID() {
         return contentID;
     }
@@ -73,6 +85,9 @@ public abstract class Content {
 
     public void setGenres(List<String> genres) {
         this.genres = genres;
+    }
+
+    public void printFullContent() {
     }
 }
 

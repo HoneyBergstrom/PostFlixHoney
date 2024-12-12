@@ -30,7 +30,16 @@ public class Movie extends Content {
 
     @Override
     public String toString() {
+        String type = (this instanceof Movie) ? "Movie" : "Series";
         String genreString = String.join(", ", genres);
-        return this.getClass().getName() + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString;
+        return type + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString;
+    }
+
+    @Override
+    public void printFullDetails() {
+        System.out.println("\n--- Movie Details ---");
+        printBasicDetails();
+        System.out.println("Runtime: " + runTime + " minutes");
+        System.out.println("Has Credit Scenes: " + (hasCreditScenes ? "Yes" : "No"));
     }
 }
