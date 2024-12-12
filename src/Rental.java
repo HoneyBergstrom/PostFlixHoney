@@ -3,7 +3,6 @@
 import java.time.LocalDate;
 
 public class Rental {
-    private int rentalID;
     private Content content;
     private Customer customer;
     private LocalDate dateOrdered;
@@ -11,9 +10,8 @@ public class Rental {
     private LocalDate dateReturned;
     private boolean isReturned;
 
-    public Rental(int rentalID, Content content, Customer customer, LocalDate dateOrdered,
+    public Rental(Content content, Customer customer, LocalDate dateOrdered,
                   LocalDate dateShipped, LocalDate dateReturned, boolean isReturned) {
-        this.rentalID = rentalID;
         this.content = content;
         this.customer = customer;
         this.dateOrdered = dateOrdered;
@@ -21,6 +19,8 @@ public class Rental {
         this.dateReturned = dateReturned;
         this.isReturned = isReturned;
     }
+
+
 
     public int getRentalID() {
         return rentalID;

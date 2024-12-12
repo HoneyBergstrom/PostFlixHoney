@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -31,6 +32,37 @@ public class ContentManager {
     public List<Content> getInventory() {
         return inventory;
     }
+
+    public void borrowContent(int contentID, String username) {
+
+        Optional<Content> contentOptional = inventory.stream()
+                .filter(c -> c.getContentID() == contentID)
+                .findFirst();
+
+        if (contentOptional.isPresent()) {
+            Content content = contentOptional.get();
+
+            if (content.isAvailable()) {
+                content.setAvailable(false);
+
+                System.out.println(username + " has successfully borrowed: " + content.getTitle());
+            } else {
+                System.out.println("The content is not available for borrowing.");
+            }
+        } else {
+            System.out.println("Content with ID " + contentID + " not found.");
+        }
+
+        Rental rental = new Rental(contentOptional.get(), );
+
+
+
+
+
+    }
+
+
+
     public List<Content> readFromFile(Path readDataFromFile) {
         List<Content> contents = new ArrayList<>();
 

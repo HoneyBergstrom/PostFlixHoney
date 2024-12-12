@@ -3,6 +3,7 @@
 public abstract class User {
     private String name;
     private String password;
+    private String username;
 
     public User(String name, String password) {
         this.name = name;
@@ -19,5 +20,9 @@ public abstract class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
