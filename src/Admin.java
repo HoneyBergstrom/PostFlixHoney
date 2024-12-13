@@ -58,7 +58,7 @@ public class Admin extends User {
 
                     System.out.print("Is it Available? (true/false): ");
                     boolean isAvailable = scanner.nextBoolean();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine(); 
                     contentToUpdate.setAvailable(isAvailable);
 
                     System.out.println("Enter Genres (comma-separated): ");
