@@ -6,15 +6,13 @@ public class Rental {
     private Content content;
     private Customer customer;
     private LocalDate dateShipped;
-    private LocalDate dateReturned;
     private boolean isReturned;
 
     public Rental(Content content, Customer customer,
-                  LocalDate dateShipped, LocalDate dateReturned, boolean isReturned) {
+                  LocalDate dateShipped, boolean isReturned) {
         this.content = content;
         this.customer = customer;
         this.dateShipped = dateShipped;
-        this.dateReturned = dateReturned;
         this.isReturned = isReturned;
     }
 
@@ -42,14 +40,6 @@ public class Rental {
 
     public void setDateShipped(LocalDate dateShipped) {
         this.dateShipped = dateShipped;
-    }
-
-    public LocalDate getDateReturned() {
-        return dateReturned;
-    }
-
-    public void setDateReturned(LocalDate dateReturned) {
-        this.dateReturned = dateReturned;
     }
 
     public boolean isReturned() {

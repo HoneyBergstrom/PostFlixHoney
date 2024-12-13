@@ -46,7 +46,7 @@ public class ContentManager {
         }
 
 
-        Rental rental = new Rental(contentToBorrow, customer, LocalDate.now(), null, false);
+        Rental rental = new Rental(contentToBorrow, customer, LocalDate.now(), false);
 
         customer.addRental(rental);
 

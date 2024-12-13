@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class PostFlix {
@@ -166,13 +167,9 @@ public class PostFlix {
                 for (int i = 0; i < activeRentals.size(); i++) {
                     System.out.println((i + 1) + ". " + activeRentals.get(i).getContent().getTitle());
                 }
-                System.out.println("Enter the number of the movie to track your order:");
-                int userInput = scanner.nextInt();
-                int orderID = userInput - 1;
-                if (userInput > activeRentals.size()) {
-                    System.out.println("Wrong input");
-                }
-                Rental rental = user.trackOrder(orderID);
+                System.out.println("Enter the name of the content to track your order:");
+                String userInput = scanner.nextLine();
+                Rental rental = user.trackOrder(userInput);
                 if (rental != null) {
                     System.out.println("Your content " + rental.getContent().getTitle() + " was shipped " + rental.getDateShipped());
                 }
