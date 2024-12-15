@@ -46,21 +46,40 @@ public class PostFlix {
                 if (loginManager.checkUsernameAvailability(username)) {
                     String street, postalCode, city, doorCode, phoneNumber;
 
-                    //TODO Validate inputs
-                    System.out.print("Enter your street address: ");
-                    street = scanner.nextLine();
+                    while (true) {
+                        System.out.print("Enter your street address: ");
+                        street = scanner.nextLine();
+                        if (!street.isEmpty()) break;
+                        System.out.println("Street address cannot be empty.");
+                    }
 
-                    System.out.print("Enter your postal code: ");
-                    postalCode = scanner.nextLine();
+                    while (true) {
+                        System.out.print("Enter your postal code (5 digits): ");
+                        postalCode = scanner.nextLine();
+                        if (postalCode.matches("\\d{5}")) break;
+                        System.out.println("Postal code must be exactly 5 digits.");
+                    }
 
-                    System.out.print("Enter your city: ");
-                    city = scanner.nextLine();
+                    while (true) {
+                        System.out.print("Enter your city: ");
+                        city = scanner.nextLine();
+                        if (!city.isEmpty()) break;
+                        System.out.println("City cannot be empty.");
+                    }
 
-                    System.out.print("Enter your door code: ");
-                    doorCode = scanner.nextLine();
+                    while (true) {
+                        System.out.print("Enter your door code (numeric): ");
+                        doorCode = scanner.nextLine();
+                        if (doorCode.matches("\\d+")) break;
+                        System.out.println("Door code must be numeric.");
+                    }
 
-                    System.out.print("Enter your phone number: ");
-                    phoneNumber = scanner.nextLine();
+                    while (true) {
+                        System.out.print("Enter your phone number (10 digits): ");
+                        phoneNumber = scanner.nextLine();
+                        if (phoneNumber.matches("\\d{10}")) break;
+                        System.out.println("Phone number must be exactly 10 digits.");
+                    }
 
                     Address address = new Address(street, Integer.parseInt(postalCode), city, Integer.parseInt(doorCode), phoneNumber);
 
@@ -95,7 +114,7 @@ public class PostFlix {
             System.out.println("      LOGIN FAILED! INVALID CREDENTIALS.");
             System.out.println("========================================\n");
         }
-        
+
 
         String userCommand = "";
         System.out.println(userCommand);
@@ -142,7 +161,7 @@ public class PostFlix {
                     for (String category : contentManager.getCategories()) {
                         System.out.println(category);
                     }
-                    
+
                     System.out.println("Enter the genre to search: ");
 
                     String genre = scanner.nextLine();
@@ -150,26 +169,26 @@ public class PostFlix {
 
                     searchByGenre(genre);
                     break;
-                    
-            case "trackorder":
-                System.out.println("Tracking orders...");
-                Customer loggedInUser = (Customer) user;
-                List<Rental> activeRentals = loggedInUser.getActiveRentals();
-                if(activeRentals.size() == 0) {
-                    System.out.println("No active rentals found.");
+
+                case "trackorder":
+                    System.out.println("Tracking orders...");
+                    Customer loggedInUser = (Customer) user;
+                    List<Rental> activeRentals = loggedInUser.getActiveRentals();
+                    if (activeRentals.size() == 0) {
+                        System.out.println("No active rentals found.");
+                        break;
+                    }
+                    System.out.println("List of active rentals:");
+                    for (int i = 0; i < activeRentals.size(); i++) {
+                        System.out.println((i + 1) + ". " + activeRentals.get(i).getContent().getTitle());
+                    }
+                    System.out.println("Enter the name of the content to track your order:");
+                    String userInput = scanner.nextLine();
+                    Rental rental = user.trackOrder(userInput);
+                    if (rental != null) {
+                        System.out.println("Your content " + rental.getContent().getTitle() + " was shipped " + rental.getDateShipped());
+                    }
                     break;
-                }
-                System.out.println("List of active rentals:");
-                for (int i = 0; i < activeRentals.size(); i++) {
-                    System.out.println((i + 1) + ". " + activeRentals.get(i).getContent().getTitle());
-                }
-                System.out.println("Enter the name of the content to track your order:");
-                String userInput = scanner.nextLine();
-                Rental rental = user.trackOrder(userInput);
-                if (rental != null) {
-                    System.out.println("Your content " + rental.getContent().getTitle() + " was shipped " + rental.getDateShipped());
-                }
-                break;
 
                 case "updatecontent":
                     if (user instanceof Admin) {
@@ -192,6 +211,7 @@ public class PostFlix {
             }
         }
     }
+
     private void displayCommands(User user) {
         if (user == null) {
             System.out.println("Error: No user logged in");
@@ -221,6 +241,7 @@ public class PostFlix {
             System.out.println("========================================");
         }
     }
+
     private void searchByGenre(String genre) {
         boolean found = false;
         for (Content content : contentManager.getInventory()) {
@@ -234,6 +255,7 @@ public class PostFlix {
             }
         }
     }
+
     private void searchByTitle(String filmTitle) {
         for (Content content : contentManager.getInventory()) {
             if (content.getTitle().equalsIgnoreCase(filmTitle)) {
