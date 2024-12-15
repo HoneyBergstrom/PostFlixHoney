@@ -195,8 +195,15 @@ public class PostFlix {
 
                     break;
                 case "contact":
-                    //TODO contact info
+                    System.out.println("\n========================================");
+                    System.out.println("           CONTACT INFORMATION");
+                    System.out.println("========================================");
+                    System.out.println("Email: contact@postflix.com");
+                    System.out.println("Address: Tomtebodavägen 3A, 171 65 Solna");
+                    System.out.println("Phone: +46 123 123 22 33");
+                    System.out.println("========================================");
                     break;
+
                 case "leavefeedback":
                     System.out.println("Enter the Content ID to leave feedback for:");
                     int contentIDToFeedback = scanner.nextInt();
