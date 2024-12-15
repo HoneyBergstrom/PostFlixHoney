@@ -17,11 +17,7 @@ public class PostFlix {
 
 
     private void run() {
-
-        for (Content content : contentManager.getInventory()) {
-            System.out.println(content.getContentID());
-        }
-
+        
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("========================================");

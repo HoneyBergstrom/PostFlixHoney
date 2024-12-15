@@ -60,7 +60,6 @@ public class ContentManager {
         try (Scanner scanner = new Scanner(readDataFromFile)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                System.out.println(line);
                 String[] parts = line.trim().split("\\|");
                 int contentID = Integer.parseInt(parts[0]);
                 String contentType = parts[1];
@@ -80,9 +79,6 @@ public class ContentManager {
                     boolean hasCreditScenes = Boolean.parseBoolean(parts[9]);
                     Movie movie = new Movie(contentID, title, director, description, releaseYear, isAvailable, genres, runtTime, hasCreditScenes);
                     inventory.add(movie);
-                    //Content content = contents.get(0);
-                    //Movie temp = (Movie)content;
-                    //temp.getRunTime();
                 } else if (contentType.equals("Series")) {
                     int totalEpisodes = Integer.parseInt(parts[8]);
                     String[] episodeEachSeason = parts[9].split(",");
@@ -99,10 +95,7 @@ public class ContentManager {
                     inventory.add(series);
                 }
             }
-
-            for (Content content : inventory) {
-                System.out.println(content.getTitle());
-            }
+            
         } catch (FileNotFoundException e) {
             System.out.println("File could not be found");
             e.printStackTrace();

@@ -16,7 +16,6 @@ public class LoginManager {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(",");
-                System.out.println(parts[0]);
                 if (parts[0].equals("user")) {
                     
                     String[] addressParts = parts[3].split(";");
