@@ -95,10 +95,7 @@ public class PostFlix {
             System.out.println("      LOGIN FAILED! INVALID CREDENTIALS.");
             System.out.println("========================================\n");
         }
-
-
-        //Test user
-
+        
 
         String userCommand = "";
         System.out.println(userCommand);
@@ -141,6 +138,11 @@ public class PostFlix {
                     break;
 
                 case "searchbygenre":
+
+                    for (String category : contentManager.getCategories()) {
+                        System.out.println(category);
+                    }
+                    
                     System.out.println("Enter the genre to search: ");
 
                     String genre = scanner.nextLine();
@@ -148,15 +150,9 @@ public class PostFlix {
 
                     searchByGenre(genre);
                     break;
-
-                case "manageuser":
-                    System.out.println("Managing users...");
-// Add user management logic here
-                    break;
-
+                    
             case "trackorder":
                 System.out.println("Tracking orders...");
-// Add order tracking logic here
                 Customer loggedInUser = (Customer) user;
                 List<Rental> activeRentals = loggedInUser.getActiveRentals();
                 if(activeRentals.size() == 0) {
@@ -183,6 +179,9 @@ public class PostFlix {
                     }
 
                     break;
+                case "contact":
+                    //TODO contact info
+                    break;
                 case "commands":
 
                     displayCommands(user);
@@ -193,7 +192,6 @@ public class PostFlix {
             }
         }
     }
-
     private void displayCommands(User user) {
         if (user == null) {
             System.out.println("Error: No user logged in");
@@ -207,9 +205,10 @@ public class PostFlix {
             System.out.println("Return          - To return borrowed content.");
             System.out.println("TrackOrder      - To track orders by ID.");
             System.out.println("List            - See all available content.");
-            System.out.println("SearchByFilm  - Search for a specific film by its title.");
-            System.out.println("SearchByGenre - List all content within a specific genre.");
-            System.out.println("Commands       - List all commands");
+            System.out.println("SearchByFilm    - Search for a specific film by its title.");
+            System.out.println("SearchByGenre   - List all content within a specific genre.");
+            System.out.println("Contact         - Show PostFlix's contact information");
+            System.out.println("Commands        - List all commands");
             System.out.println("========================================");
         } else {
             System.out.println("========================================");
@@ -218,15 +217,14 @@ public class PostFlix {
             System.out.println("ManageUser      - To manage users.");
             System.out.println("TrackOrder      - To track orders by ID.");
             System.out.println("UpdateContent   - To update content.");
-            System.out.println("Commands       - List all commands");
+            System.out.println("Commands        - List all commands");
             System.out.println("========================================");
         }
     }
-
     private void searchByGenre(String genre) {
         boolean found = false;
         for (Content content : contentManager.getInventory()) {
-            if (content.getGenres().contains(genre)) {
+            if (content.getGenres().stream().anyMatch(g -> g.equalsIgnoreCase(genre))) {
                 System.out.println("- " + content.getTitle());
                 found = true;
             }
@@ -235,9 +233,7 @@ public class PostFlix {
                 System.out.println("No movies found in the genre " + genre);
             }
         }
-
     }
-
     private void searchByTitle(String filmTitle) {
         for (Content content : contentManager.getInventory()) {
             if (content.getTitle().equalsIgnoreCase(filmTitle)) {

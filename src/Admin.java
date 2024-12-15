@@ -3,13 +3,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Admin extends User {
-//    private List<User> managedUsers;
-    //Ändra namn och göra till singleton?
     private ContentManager contentManager;
     
     public Admin(String name, String password) {
         super(name, password);
-//        managedUsers = new ArrayList<>();
         this.contentManager = ContentManager.getInstance();
     }
     

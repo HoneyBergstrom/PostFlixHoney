@@ -14,11 +14,13 @@ public class ContentManager {
     private static ContentManager instance;
     private List<Content> inventory;
     private List<User> users;
+    private Set<String> categories;
 
 
     private ContentManager() {
         this.inventory = new ArrayList<>();
         this.users = new ArrayList<>();
+        this.categories = new HashSet<>();
         readFromFile(Paths.get("src/Content"));
     }
 
@@ -65,14 +67,18 @@ public class ContentManager {
                 String title = parts[2];
                 String director = parts[3];
                 String description = parts[4];
-                List<String> genre = Arrays.asList(parts[5].split(";"));
+                List<String> genres = Arrays.asList(parts[5].split(";"));
                 int releaseYear = Integer.parseInt(parts[6]);
                 boolean isAvailable = Boolean.parseBoolean(parts[7]);
 
+                for (String genre : genres) {
+                    this.categories.add(genre.trim());
+                }
+                
                 if (contentType.equals("Movie")) {
                     int runtTime = Integer.parseInt(parts[8]);
                     boolean hasCreditScenes = Boolean.parseBoolean(parts[9]);
-                    Movie movie = new Movie(contentID, title, director, description, releaseYear, isAvailable, genre, runtTime, hasCreditScenes);
+                    Movie movie = new Movie(contentID, title, director, description, releaseYear, isAvailable, genres, runtTime, hasCreditScenes);
                     inventory.add(movie);
                     //Content content = contents.get(0);
                     //Movie temp = (Movie)content;
@@ -89,7 +95,7 @@ public class ContentManager {
                         episodeEachSeasonMap.put(key, value);
                     }
 
-                    Series series = new Series(contentID, title, director, description, releaseYear, isAvailable, genre, totalEpisodes, episodeEachSeasonMap);
+                    Series series = new Series(contentID, title, director, description, releaseYear, isAvailable, genres, totalEpisodes, episodeEachSeasonMap);
                     inventory.add(series);
                 }
             }
@@ -189,5 +195,9 @@ public class ContentManager {
         }
 
         return null;
+    }
+
+    public Set<String> getCategories() {
+        return categories;
     }
 }
