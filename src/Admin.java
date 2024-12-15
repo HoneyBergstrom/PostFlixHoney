@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,7 +16,7 @@ public class Admin extends User {
         while (true) {
             System.out.println("Input content ID to update content");
             int id = scanner.nextInt();
-            Content contentToUpdate = contentManager.getContent(id);
+            Content contentToUpdate = contentManager.getContentById(id);
             if (contentToUpdate == null) {
                 System.out.println("No content with that ID exists! ");
                 continue;
@@ -32,7 +31,7 @@ public class Admin extends User {
 
             switch (choice) {
                 case 1:
-                    contentToUpdate.printFullContent();
+                    contentToUpdate.printFullDetails();
                     break;
 
                 case 2:

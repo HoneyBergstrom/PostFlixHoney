@@ -197,6 +197,26 @@ public class PostFlix {
                 case "contact":
                     //TODO contact info
                     break;
+                case "leavefeedback":
+                    System.out.println("Enter the Content ID to leave feedback for:");
+                    int contentIDToFeedback = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Content contentToFeedback = contentManager.getContentById(contentIDToFeedback); 
+                    if (contentToFeedback == null) {
+                        System.out.println("Content not found!");
+                        break;
+                    }
+
+                    System.out.println("Enter a feedback score (1-5):");
+                    int feedbackScore = scanner.nextInt();
+                    scanner.nextLine();
+
+                    contentToFeedback.leaveFeedback(feedbackScore);
+                    System.out.println("Thank you for your feedback!");
+                    
+                    break;
+                    
                 case "commands":
 
                     displayCommands(user);
@@ -223,6 +243,7 @@ public class PostFlix {
             System.out.println("List            - See all available content.");
             System.out.println("SearchByFilm    - Search for a specific film by its title.");
             System.out.println("SearchByGenre   - List all content within a specific genre.");
+            System.out.println("LeaveFeedback   - Submit a feedback score for content.");
             System.out.println("Contact         - Show PostFlix's contact information");
             System.out.println("Commands        - List all commands");
             System.out.println("========================================");
@@ -255,7 +276,7 @@ public class PostFlix {
     private void searchByTitle(String filmTitle) {
         for (Content content : contentManager.getInventory()) {
             if (content.getTitle().equalsIgnoreCase(filmTitle)) {
-                System.out.println(content);
+                content.printFullDetails();
                 return;
             }
         }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Content {
@@ -8,6 +9,7 @@ public abstract class Content {
     public int releaseYears ;
     public boolean isAvailable ;
     public List<String> genres;
+    List<Integer> feedbackScores;
 
     public Content(int contentID, String title, String director, String description, int releaseYears, boolean isAvailable, List<String> genres) {
         this.contentID = contentID;
@@ -17,6 +19,7 @@ public abstract class Content {
         this.releaseYears = releaseYears;
         this.isAvailable = isAvailable;
         this.genres = genres;
+        this.feedbackScores = new ArrayList<>();
     }
 
     public abstract void printFullDetails();
@@ -29,16 +32,29 @@ public abstract class Content {
         System.out.println("Release Year: " + releaseYears);
         System.out.println("Available: " + (isAvailable ? "Yes" : "No"));
         System.out.println("Genres: " + (genres.isEmpty() ? "None" : String.join(", ", genres)));
+        System.out.printf("Average Feedback Score: %.2f\n", getAverageFeedback());
+    }
+    
+    public void leaveFeedback(int score) {
+        if (score >= 1 && score <= 5) {
+            feedbackScores.add(score);
+        } else {
+            System.out.println("Feedback score must be between 1 and 5");
+        }
     }
 
+    public double getAverageFeedback() {
+        if (feedbackScores.isEmpty()) {
+            return 0.0;
+        }
+        int total = feedbackScores.stream().mapToInt(Integer::intValue).sum();
+        return total / (feedbackScores.size() * 1.0);
+    }
+    
     public int getContentID() {
         return contentID;
     }
-
-    public void setContentID(int contentID) {
-        this.contentID = contentID;
-    }
-
+    
     public String getTitle() {
         return title;
     }
@@ -46,19 +62,11 @@ public abstract class Content {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public String getDirector() {
-        return director;
-    }
-
+    
     public void setDirector(String director) {
         this.director = director;
     }
-
-    public String getDescription() {
-        return description;
-    }
-
+    
     public void setDescription(String description) {
         this.description = description;
     }
@@ -66,7 +74,6 @@ public abstract class Content {
     public int getReleaseYears() {
         return releaseYears;
     }
-
     public void setReleaseYears(int releaseYears) {
         this.releaseYears = releaseYears;
     }
@@ -87,7 +94,6 @@ public abstract class Content {
         this.genres = genres;
     }
 
-    public void printFullContent() {
-    }
+    
 }
 

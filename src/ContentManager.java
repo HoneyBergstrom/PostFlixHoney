@@ -37,7 +37,7 @@ public class ContentManager {
 
     public void borrowContent(int contentID, Customer customer) {
 
-        Content contentToBorrow = this.getContent(contentID);
+        Content contentToBorrow = this.getContentById(contentID);
 
         if (contentToBorrow.isAvailable()) {
             contentToBorrow.setAvailable(false);
@@ -156,7 +156,7 @@ public class ContentManager {
 
 
     public void processReturn(int contentId, Customer customer) {
-        Content contentToReturn = this.getContent(contentId);
+        Content contentToReturn = this.getContentById(contentId);
 
         if (!contentToReturn.isAvailable()) {
             contentToReturn.setAvailable(true);
@@ -179,7 +179,7 @@ public class ContentManager {
         }
     }
 
-    public Content getContent(int id) {
+    public Content getContentById(int id) {
         for (Content content : inventory) {
             System.out.println(content.contentID);
             if (content.getContentID() == id) {
@@ -193,4 +193,5 @@ public class ContentManager {
     public Set<String> getCategories() {
         return categories;
     }
+    
 }
