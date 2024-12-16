@@ -17,7 +17,7 @@ public class PostFlix {
 
 
     private void run() {
-        
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("========================================");
@@ -118,6 +118,9 @@ public class PostFlix {
             displayCommands(user);
             userCommand = scanner.nextLine();
             System.out.println(userCommand);
+
+            List<Rental> activeRentals;
+            Customer loggedInUser;
             switch (userCommand.toLowerCase()) {
                 case "borrow":
                     System.out.println("You chose to borrow content. Input Content ID  to borrow");
@@ -129,11 +132,25 @@ public class PostFlix {
 
                     break;
                 case "return":
+
+                    loggedInUser = (Customer) user;
+                    activeRentals = loggedInUser.getActiveRentals();
+                    if (activeRentals.isEmpty()) {
+                        System.out.println("No active rentals found.");
+                        break;
+                    }
+                    System.out.println("List of active rentals:");
+                    for (Rental activeRental : activeRentals) {
+                        System.out.println(activeRental.getContent().contentId + ". " + activeRental.getContent().getTitle());
+                    }
+
                     System.out.println("You chose to return content. Input Content ID  to return");
                     int contentIDToReturn = scanner.nextInt();
                     scanner.nextLine();
 
                     contentManager.processReturn(contentIDToReturn, (Customer) user);
+
+                    loggedInUser.getActiveRentals().removeIf(activeRental -> activeRental.getContent().getContentId() == contentIDToReturn);
 
                     break;
                 case "list":
@@ -168,18 +185,19 @@ public class PostFlix {
 
                 case "trackorder":
                     System.out.println("Tracking orders...");
-                    Customer loggedInUser = (Customer) user;
-                    List<Rental> activeRentals = loggedInUser.getActiveRentals();
+                    loggedInUser = (Customer) user;
+                    activeRentals = loggedInUser.getActiveRentals();
                     if (activeRentals.size() == 0) {
                         System.out.println("No active rentals found.");
                         break;
                     }
                     System.out.println("List of active rentals:");
-                    for (int i = 0; i < activeRentals.size(); i++) {
-                        System.out.println((i + 1) + ". " + activeRentals.get(i).getContent().getTitle());
+                    for (Rental activeRental : activeRentals) {
+                        System.out.println(activeRental.getContent().contentId + ". " + activeRental.getContent().getTitle());
                     }
-                    System.out.println("Enter the name of the content to track your order:");
-                    String userInput = scanner.nextLine();
+                    System.out.println("Enter the ID of the content to track your order:");
+                    int userInput = scanner.nextInt();
+                    scanner.nextLine();
                     Rental rental = user.trackOrder(userInput);
                     if (rental != null) {
                         System.out.println("Your content " + rental.getContent().getTitle() + " was shipped " + rental.getDateShipped());
@@ -209,7 +227,7 @@ public class PostFlix {
                     int contentIDToFeedback = scanner.nextInt();
                     scanner.nextLine();
 
-                    Content contentToFeedback = contentManager.getContentById(contentIDToFeedback); 
+                    Content contentToFeedback = contentManager.getContentById(contentIDToFeedback);
                     if (contentToFeedback == null) {
                         System.out.println("Content not found!");
                         break;
@@ -222,7 +240,7 @@ public class PostFlix {
                     contentToFeedback.leaveFeedback(feedbackScore);
                     System.out.println("Thank you for your feedback!");
                     break;
-                    
+
                 case "commands":
                     displayCommands(user);
                     break;
@@ -265,5 +283,5 @@ public class PostFlix {
         }
     }
 
-    
+
 }

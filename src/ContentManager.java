@@ -13,13 +13,11 @@ import java.util.*;
 public class ContentManager {
     private static ContentManager instance;
     private List<Content> inventory;
-    private List<User> users;
     private Set<String> categories;
 
 
     private ContentManager() {
         this.inventory = new ArrayList<>();
-        this.users = new ArrayList<>();
         this.categories = new HashSet<>();
         readFromFile(Paths.get("src/Content"));
     }
@@ -140,7 +138,6 @@ public class ContentManager {
         if (!contentToReturn.isAvailable()) {
             contentToReturn.setAvailable(true);
             
-            customer.getActiveRentals().remove(contentToReturn);
             customer.addToHistory(contentToReturn);
 
             System.out.println(customer.getName() + " has successfully return: " + contentToReturn.getTitle()
@@ -148,6 +145,7 @@ public class ContentManager {
         } else {
             System.out.println("Returning content failed");
         }
+        
     }
     
 
@@ -169,10 +167,9 @@ public class ContentManager {
                 System.out.println("- " + content.getTitle());
                 found = true;
             }
-
-            if (!found) {
-                System.out.println("No movies found in the genre " + genre);
-            }
+        }
+        if (!found) {
+            System.out.println("No movies found in the genre " + genre);
         }
     }
 

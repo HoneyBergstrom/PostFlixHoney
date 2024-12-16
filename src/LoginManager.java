@@ -46,14 +46,8 @@ public class LoginManager {
     }
 
     public User authenticated(String username, String password) {
-        System.out.println(users.size());
-        for (User user : users) {
-            System.out.println("Username: " + user.getName());
-            System.out.println("Password: " + user.getPassword());
-        }
         for (User user : users) {
             if (user.getName().equals(username) && user.getPassword().equals(password)) {
-                System.out.println("Returning user");
                 return user;
             }
         }

@@ -9,11 +9,11 @@ public abstract class User {
         this.password = password;
     }
 
-    public Rental trackOrder(String contentName) {
+    public Rental trackOrder(int contentId) {
         Customer customer = (Customer) this;
         return customer.getActiveRentals()
                 .stream()
-                .filter(rental -> rental.getContent().getTitle().equalsIgnoreCase(contentName))
+                .filter(rental -> rental.getContent().getContentId() == contentId)
                 .findFirst()
                 .orElse(null);
     }
