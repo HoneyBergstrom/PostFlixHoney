@@ -32,7 +32,7 @@ public class Movie extends Content {
     public String toString() {
         String type = (this instanceof Movie) ? "Movie" : "Series";
         String genreString = String.join(", ", genres);
-        return type + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString;
+        return "ID: " + contentId + " - " + type + " - Title: " + title + ", Director: " + director + ", Genres: " + genreString;
     }
 
     @Override

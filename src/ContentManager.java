@@ -151,7 +151,6 @@ public class ContentManager {
 
     public Content getContentById(int id) {
         for (Content content : inventory) {
-            System.out.println(content.contentId);
             if (content.getContentId() == id) {
                 return content;
             }
