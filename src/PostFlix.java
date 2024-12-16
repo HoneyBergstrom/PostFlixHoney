@@ -128,7 +128,6 @@ public class PostFlix {
                     scanner.nextLine();
                     contentManager.borrowContent(contentIDToBorrow, (Customer) user);
 
-                    System.out.println("Borrwing book");
 
                     break;
                 case "return":
