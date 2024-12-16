@@ -149,7 +149,7 @@ public class PostFlix {
                     String filmTitle = scanner.nextLine();
                     System.out.println("Searching for film: " + filmTitle);
 
-                    searchByTitle(filmTitle);
+                    contentManager.searchByTitle(filmTitle);
                     break;
 
                 case "searchbygenre":
@@ -163,7 +163,7 @@ public class PostFlix {
                     String genre = scanner.nextLine();
                     System.out.println("Listing all content in the genre: " + genre);
 
-                    searchByGenre(genre);
+                    contentManager.searchByGenre(genre);
                     break;
 
                 case "trackorder":
@@ -221,12 +221,11 @@ public class PostFlix {
 
                     contentToFeedback.leaveFeedback(feedbackScore);
                     System.out.println("Thank you for your feedback!");
-                    
                     break;
                     
                 case "commands":
-
                     displayCommands(user);
+                    break;
 
                 default:
                     System.out.println("Invalid command! Please try again.");
@@ -266,27 +265,5 @@ public class PostFlix {
         }
     }
 
-    private void searchByGenre(String genre) {
-        boolean found = false;
-        for (Content content : contentManager.getInventory()) {
-            if (content.getGenres().stream().anyMatch(g -> g.equalsIgnoreCase(genre))) {
-                System.out.println("- " + content.getTitle());
-                found = true;
-            }
-
-            if (!found) {
-                System.out.println("No movies found in the genre " + genre);
-            }
-        }
-    }
-
-    private void searchByTitle(String filmTitle) {
-        for (Content content : contentManager.getInventory()) {
-            if (content.getTitle().equalsIgnoreCase(filmTitle)) {
-                content.printFullDetails();
-                return;
-            }
-        }
-        System.out.println("No movie with the title '" + filmTitle + "' was found.");
-    }
+    
 }

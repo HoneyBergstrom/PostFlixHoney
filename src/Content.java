@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Content {
-    public int contentID ;
+    public int contentId;
     public String title ;
     public String director ;
     public String description ;
@@ -11,8 +11,8 @@ public abstract class Content {
     public List<String> genres;
     List<Integer> feedbackScores;
 
-    public Content(int contentID, String title, String director, String description, int releaseYears, boolean isAvailable, List<String> genres) {
-        this.contentID = contentID;
+    public Content(int contentId, String title, String director, String description, int releaseYears, boolean isAvailable, List<String> genres) {
+        this.contentId = contentId;
         this.title = title;
         this.director = director;
         this.description = description;
@@ -25,7 +25,7 @@ public abstract class Content {
     public abstract void printFullDetails();
 
     protected void printBasicDetails() {
-        System.out.println("Content ID: " + contentID);
+        System.out.println("Content ID: " + contentId);
         System.out.println("Title: " + title);
         System.out.println("Director: " + director);
         System.out.println("Description: " + description);
@@ -51,8 +51,8 @@ public abstract class Content {
         return total / (feedbackScores.size() * 1.0);
     }
     
-    public int getContentID() {
-        return contentID;
+    public int getContentId() {
+        return contentId;
     }
     
     public String getTitle() {

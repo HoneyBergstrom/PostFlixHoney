@@ -115,7 +115,7 @@ public class ContentManager {
         try (BufferedWriter wr = new BufferedWriter(new FileWriter(fileName, true))) {
 
             for (Content c : contents) {
-                wr.write(c.getContentID() + ", " + c.getTitle() + ", " + c.isAvailable());
+                wr.write(c.getContentId() + ", " + c.getTitle() + ", " + c.isAvailable());
                 wr.newLine();
             }
 
@@ -133,28 +133,7 @@ public class ContentManager {
             System.exit(0);
         }
     }
-
-
-    public void addContent(Content content) {
-        inventory.add(content);
-    }
-
-
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-
-    public void processOrder(Content content) {
-        if (inventory.contains(content) && content.isAvailable()) {
-            content.setAvailable(false);
-            System.out.println("Ordern har behandlats: " + content.getTitle());
-        } else {
-            System.out.println("Innehållet är inte tillgängligt.");
-        }
-    }
-
-
+    
     public void processReturn(int contentId, Customer customer) {
         Content contentToReturn = this.getContentById(contentId);
 
@@ -170,24 +149,41 @@ public class ContentManager {
             System.out.println("Returning content failed");
         }
     }
-
-
-    public void showInventory() {
-        System.out.println("Inventory:");
-        for (Content content : inventory) {
-            System.out.println("- " + content.getTitle() + " (Tillgänglig: " + content.isAvailable() + ")");
-        }
-    }
+    
 
     public Content getContentById(int id) {
         for (Content content : inventory) {
-            System.out.println(content.contentID);
-            if (content.getContentID() == id) {
+            System.out.println(content.contentId);
+            if (content.getContentId() == id) {
                 return content;
             }
         }
 
         return null;
+    }
+
+    public void searchByGenre(String genre) {
+        boolean found = false;
+        for (Content content : inventory) {
+            if (content.getGenres().stream().anyMatch(g -> g.equalsIgnoreCase(genre))) {
+                System.out.println("- " + content.getTitle());
+                found = true;
+            }
+
+            if (!found) {
+                System.out.println("No movies found in the genre " + genre);
+            }
+        }
+    }
+
+    public void searchByTitle(String filmTitle) {
+        for (Content content : inventory) {
+            if (content.getTitle().equalsIgnoreCase(filmTitle)) {
+                content.printFullDetails();
+                return;
+            }
+        }
+        System.out.println("No movie with the title '" + filmTitle + "' was found.");
     }
 
     public Set<String> getCategories() {
