@@ -9,9 +9,8 @@ public class Customer extends User {
     private List<Rental> activeRentals;
     private List<Content> rentHistory;
     private Address address;
-    
-    //Ändra namn och göra till singleton?
-    
+    private List<Content> wishList;
+
 
     public Customer(String name, String password, Address address) {
         super(name, password);
@@ -19,6 +18,8 @@ public class Customer extends User {
         this.rentHistory = new ArrayList<>();
         this.address = address;
     }
+
+
     
     
     
